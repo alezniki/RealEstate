@@ -5,4 +5,5 @@
     <string name="dialog_add_info_main">Add New Estate</string>
     <string name="edit_estate">Edit</string>
     <string name="delete_estate">Delete</string>
+    <string name="dialog_delete_estate">Delete Estate</string>
 </resources>

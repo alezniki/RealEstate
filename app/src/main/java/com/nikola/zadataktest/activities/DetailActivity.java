@@ -1,10 +1,13 @@
 package com.nikola.zadataktest.activities;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -59,6 +62,13 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
+        etPhoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     @Override
@@ -88,13 +98,34 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void deleteEstateItem() {
-        try {
-            getDatabaseHelper().getEstateDao().delete(estate);
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_delete_estate);
 
-            finish();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Button btnDeleteOK = (Button)dialog.findViewById(R.id.btn_dialog_delete_ok);
+        Button btnDeleteCancel = (Button)dialog.findViewById(R.id.btn_dialog_delete_cancel);
+
+        btnDeleteOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    getDatabaseHelper().getEstateDao().delete(estate);
+
+                    finish();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        btnDeleteCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void editEstateItem() {
