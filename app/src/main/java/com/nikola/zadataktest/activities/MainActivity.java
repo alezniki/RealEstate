@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(items.get(position).getTitle());
         drawerLayout.closeDrawer(drawerPane);
     }
+
     public DatabaseHelper getDatabaseHelper() {
         if (databaseHelper == null) {
             databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);

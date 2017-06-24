@@ -1,5 +1,8 @@
 package com.nikola.zadataktest.db;
 
+import android.media.Image;
+
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -41,8 +44,15 @@ public class Estate {
     private double price;
 
 
-//    ForeignCollection<Image> images
+    ForeignCollection<Image> images;
 
+    public ForeignCollection<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(ForeignCollection<Image> images) {
+        this.images = images;
+    }
 
     public Estate(){}
 

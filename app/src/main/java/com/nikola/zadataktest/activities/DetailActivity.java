@@ -3,7 +3,6 @@ package com.nikola.zadataktest.activities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +16,16 @@ import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.zadataktest.R;
+import com.nikola.zadataktest.adapters.NavigationItem;
 import com.nikola.zadataktest.db.DatabaseHelper;
 import com.nikola.zadataktest.db.Estate;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static com.nikola.zadataktest.activities.MainActivity.NOTIFICATION_TOAST;
 
 public class DetailActivity extends AppCompatActivity {
-
     private DatabaseHelper databaseHelper;
     private SharedPreferences sharedPreferences;
 
@@ -38,6 +38,9 @@ public class DetailActivity extends AppCompatActivity {
     private EditText etQuadrature;
     private EditText etRoomsNumber;
     private EditText etPrice;
+
+    // Navigation Items
+    private ArrayList<NavigationItem> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel" + estate.getPhoneNumber()));
+//                intent.setData(Uri.parse(estate.getPhoneNumber()));
                 startActivity(intent);
             }
         });
