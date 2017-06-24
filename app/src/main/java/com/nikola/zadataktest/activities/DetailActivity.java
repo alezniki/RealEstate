@@ -6,9 +6,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.zadataktest.R;
+import com.nikola.zadataktest.db.DatabaseHelper;
 
 public class DetailActivity extends AppCompatActivity {
+
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +38,23 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public DatabaseHelper getDatabaseHelper() {
+        if (databaseHelper == null) {
+            databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+        }
+
+        return databaseHelper;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (databaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            databaseHelper = null;
+        }
     }
 }
