@@ -9,9 +9,5 @@
 
     <include layout="@layout/toolbar"/>
 
-    <!--<TextView-->
-        <!--android:text="Welcome to Details"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
-
+   
 </LinearLayout>

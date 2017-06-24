@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_add_info_main"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"/>
+
+    <EditText
+        android:id="@+id/et_dialog_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Name:"/>
+    <EditText
+        android:id="@+id/et_dialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Description:"/>
+    <EditText
+        android:id="@+id/et_dialog_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Address:"/>
+    <EditText
+        android:id="@+id/et_dialog_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Phone Number:"/>
+
+    <EditText
+        android:id="@+id/et_dialog_quadrature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Quardrature:"/>
+    <EditText
+        android:id="@+id/et_dialog_rooms_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Number Of Rooms:"/>
+    <EditText
+        android:id="@+id/et_dialog_estate_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estate Price:"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_dialog_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OK"/>
+        <Button
+            android:id="@+id/btn_dialog_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"/>
+    </LinearLayout>
+</LinearLayout>

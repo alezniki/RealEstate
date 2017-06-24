@@ -32,7 +32,7 @@ public class Estate {
     @DatabaseField(columnName = FIELD_NAME_ADDRESS)
     private String address;
     @DatabaseField(columnName = FIELD_NAME_PHONE_NUMBER)
-    private int phoneNumber;
+    private String phoneNumber;
     @DatabaseField(columnName = FIELD_NAME_QUADRATURE)
     private double quadrature;
     @DatabaseField(columnName = FIELD_NAME_ROOMS_NUMBER)
@@ -78,11 +78,11 @@ public class Estate {
         this.address = address;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
