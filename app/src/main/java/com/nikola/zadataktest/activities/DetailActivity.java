@@ -96,10 +96,6 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-//
-//        if (id == R.id.action_edit) {
-//            return true;
-//        }
 
         switch (id) {
             case R.id.action_edit:
@@ -144,22 +140,43 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void editEstateItem() {
-        estate.setName(etName.getText().toString());
-        estate.setDescription(etDescription.getText().toString());
-        estate.setAddress(etAddress.getText().toString());
-        estate.setPhoneNumber(etPhoneNumber.getText().toString());
-        estate.setQuadrature(Double.parseDouble(etQuadrature.getText().toString()));
-        estate.setRoomsNumber(Integer.parseInt(etRoomsNumber.getText().toString()));
-        estate.setPrice(Double.parseDouble(etPrice.getText().toString()));
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_update_estate);
+        Button btnUpdateOK = (Button)dialog.findViewById(R.id.btn_dialog_update_ok);
+        Button btnUpdateCancel = (Button)dialog.findViewById(R.id.btn_dialog_update_cancel);
 
-        try {
-            getDatabaseHelper().getEstateDao().update(estate);
-            showToastMessage("Estate Updated Successfully");
+        btnUpdateOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                estate.setName(etName.getText().toString());
+                estate.setDescription(etDescription.getText().toString());
+                estate.setAddress(etAddress.getText().toString());
+                estate.setPhoneNumber(etPhoneNumber.getText().toString());
+                estate.setQuadrature(Double.parseDouble(etQuadrature.getText().toString()));
+                estate.setRoomsNumber(Integer.parseInt(etRoomsNumber.getText().toString()));
+                estate.setPrice(Double.parseDouble(etPrice.getText().toString()));
 
-            finish();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+                try {
+                    getDatabaseHelper().getEstateDao().update(estate);
+                    showToastMessage("Estate Updated Successfully");
+
+                    finish();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+        btnUpdateCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
     }
 
     private void showToastMessage(String message) {
