@@ -9,10 +9,34 @@
 
     <include layout="@layout/toolbar" />
 
-    <!--Main List View Items-->
-    <ListView
-        android:id="@+id/lv_main_list_items"
+    <!--Drawer Layout-->
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <!-- Main List View -->
+        <ListView
+            android:id="@+id/lv_main_list_items"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/drawer_pane"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
+
+            <!-- List Of Actions-->
+            <ListView
+                android:id="@+id/drawer_navigation_list"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:background="#FFFFFF"/>
+            <!-- android:background="@android:color/transparent"-->
+
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

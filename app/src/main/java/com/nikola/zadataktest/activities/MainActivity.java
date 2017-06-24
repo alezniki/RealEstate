@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,19 +16,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.zadataktest.R;
+import com.nikola.zadataktest.adapters.DrawerListAdapter;
+import com.nikola.zadataktest.adapters.NavigationItem;
 import com.nikola.zadataktest.db.DatabaseHelper;
 import com.nikola.zadataktest.db.Estate;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     private DatabaseHelper databaseHelper;
     private SharedPreferences sharedPreferences;
@@ -36,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
     // Preferences KEY
     public static String NOTIFICATION_TOAST = "notification_toast";
     public static String NOTIFICATION_STATUS = "notification_status";
+
+    // Navigation Items
+    private ArrayList<NavigationItem> items = new ArrayList<>();
+
+
+    // Navigation Drawer
+    private DrawerLayout drawerLayout;
+    private ListView drawerNavList;
+    private ActionBarDrawerToggle drawerToggle;
+    private LinearLayout drawerPane;
+    private CharSequence drawerTitle;
+    private CharSequence title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Draws Navigation Items
+        items.add(new NavigationItem("Home", "Show All Estates", R.drawable.ic_action_home));
+        items.add(new NavigationItem("Settings", "Change App Settings", R.drawable.ic_action_settings));
+        title = drawerTitle = getTitle();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerNavList = (ListView) findViewById(R.id.drawer_navigation_list);
+
+        // Populate the Navigation Drawer with options
+        drawerPane = (LinearLayout) findViewById(R.id.drawer_pane);
+
+        DrawerListAdapter drawerAdapter =  new DrawerListAdapter(this,items);
+        drawerNavList.setOnItemClickListener(new DrawerItemClickListener());
+        drawerNavList.setAdapter(drawerAdapter);
     }
 
     @Override
