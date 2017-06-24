@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="User Notifications"
+        android:key="sync_notification">
+
+        <!-- Toast -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="notification_toast"
+            android:summary="@string/prefs_toast_summary"
+            android:title="@string/prefs_toast_title"/>
+
+        <!-- Notification Manager -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="notification_status"
+            android:summary="@string/prefs_status_summary"
+            android:title="@string/prefs_status_title"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

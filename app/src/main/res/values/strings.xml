@@ -6,4 +6,8 @@
     <string name="edit_estate">Edit</string>
     <string name="delete_estate">Delete</string>
     <string name="dialog_delete_estate">Delete Estate</string>
+    <string name="prefs_toast_summary">Show notifications as Toast messages</string>
+    <string name="prefs_toast_title">Toast Notifications</string>
+    <string name="prefs_status_summary">Show notifications as Status Bar messages</string>
+    <string name="prefs_status_title">Status Bar Notifications</string>
 </resources>

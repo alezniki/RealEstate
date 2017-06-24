@@ -1,7 +1,11 @@
 package com.nikola.zadataktest.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.zadataktest.R;
@@ -17,9 +22,13 @@ import com.nikola.zadataktest.db.Estate;
 
 import java.sql.SQLException;
 
+import static com.nikola.zadataktest.activities.MainActivity.NOTIFICATION_TOAST;
+
 public class DetailActivity extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;
+    private SharedPreferences sharedPreferences;
+
     private Estate estate;
 
     private EditText etName;
@@ -62,12 +71,18 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
+
+        // Call Phone number
         etPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel" + estate.getPhoneNumber()));
+                startActivity(intent);
             }
         });
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
     }
 
@@ -110,7 +125,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 try {
                     getDatabaseHelper().getEstateDao().delete(estate);
-
+                    showToastMessage("Estate Deleted Successfully");
                     finish();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -139,6 +154,7 @@ public class DetailActivity extends AppCompatActivity {
 
         try {
             getDatabaseHelper().getEstateDao().update(estate);
+            showToastMessage("Estate Updated Successfully");
 
             finish();
         } catch (SQLException e) {
@@ -146,6 +162,12 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    private void showToastMessage(String message) {
+        boolean toast = sharedPreferences.getBoolean(NOTIFICATION_TOAST,false);
+
+        if (toast) Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+    }
     public DatabaseHelper getDatabaseHelper() {
         if (databaseHelper == null) {
             databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);

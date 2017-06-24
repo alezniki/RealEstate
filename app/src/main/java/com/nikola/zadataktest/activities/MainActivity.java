@@ -2,7 +2,9 @@ package com.nikola.zadataktest.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.zadataktest.R;
@@ -26,9 +29,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;
+    private SharedPreferences sharedPreferences;
     // Intent KEY
     public static String KEY_ID = "KEY_ID";
 
+    // Preferences KEY
+    public static String NOTIFICATION_TOAST = "notification_toast";
+    public static String NOTIFICATION_STATUS = "notification_status";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -114,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     getDatabaseHelper().getEstateDao().create(estate);
+
+                    boolean toast = sharedPreferences.getBoolean(NOTIFICATION_TOAST,false);
+
+                    if (toast) Toast.makeText(MainActivity.this, "New Estate Added", Toast.LENGTH_SHORT).show();
+
                     refreshList();
                 } catch (SQLException e) {
                     e.printStackTrace();
