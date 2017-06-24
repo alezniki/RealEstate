@@ -34,6 +34,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItemFromDrawer(position);
+        }
+    }
 
 
     private DatabaseHelper databaseHelper;
@@ -99,6 +107,32 @@ public class MainActivity extends AppCompatActivity {
         DrawerListAdapter drawerAdapter =  new DrawerListAdapter(this,items);
         drawerNavList.setOnItemClickListener(new DrawerItemClickListener());
         drawerNavList.setAdapter(drawerAdapter);
+
+        // Action Bar
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_action_drawer);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.show();
+        }
+
+        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.open_navigation_drawer, R.string.close_navigation_drawer) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getSupportActionBar().setTitle(title);
+                invalidateOptionsMenu(); // Creates call to onPrepareOptionMenu
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle(drawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
     }
 
     @Override
@@ -207,6 +241,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+
+    private void selectItemFromDrawer(int position) {
+        if (position == 0) {
+            // MainListActivity
+
+        } else if (position == 1) {
+            // SettingsActivity
+            startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+
+        }
+
+        drawerNavList.setItemChecked(position,true);
+        setTitle(items.get(position).getTitle());
+        drawerLayout.closeDrawer(drawerPane);
     }
     public DatabaseHelper getDatabaseHelper() {
         if (databaseHelper == null) {
