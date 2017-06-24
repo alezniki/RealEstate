@@ -1,12 +1,14 @@
 package com.nikola.zadataktest.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;
+    // Intent KEY
+    public static String KEY_ID = "KEY_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +46,15 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // listView.getItemAtPosition(position);
-//                Intent intent = new Intent(MainActivity.this,DetailActivity.class);
-//                // putExtras
-//                startActivity(intent);
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Estate e = (Estate) listView.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                intent.putExtra(KEY_ID, e.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
