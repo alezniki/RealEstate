@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private void addEstateDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_add_estate);
+        dialog.setCancelable(false);
 
         final EditText etName = (EditText)dialog.findViewById(R.id.et_dialog_name);
         final EditText etDescription = (EditText)dialog.findViewById(R.id.et_dialog_description);

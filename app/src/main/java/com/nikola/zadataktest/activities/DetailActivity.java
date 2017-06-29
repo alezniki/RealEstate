@@ -1,16 +1,17 @@
 package com.nikola.zadataktest.activities;
 
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -112,45 +113,64 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void deleteEstateItem() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_delete_estate);
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(android.R.layout.select_dialog_item, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage(R.string.dialog_delete_estate);
 
-        Button btnDeleteOK = (Button)dialog.findViewById(R.id.btn_dialog_delete_ok);
-        Button btnDeleteCancel = (Button)dialog.findViewById(R.id.btn_dialog_delete_cancel);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
 
-        btnDeleteOK.setOnClickListener(new View.OnClickListener() {
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
-                try {
-                    getDatabaseHelper().getEstateDao().delete(estate);
-                    showToastMessage("Estate Deleted Successfully");
-                    finish();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (estate != null) {
+                    try {
+                        getDatabaseHelper().getEstateDao().delete(estate);
+                        showToastMessage("Estate Deleted Successfully");
+                        finish();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
                 dialog.dismiss();
             }
         });
 
-        btnDeleteCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+        alert.show();
     }
 
     private void editEstateItem() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_update_estate);
-        Button btnUpdateOK = (Button)dialog.findViewById(R.id.btn_dialog_update_ok);
-        Button btnUpdateCancel = (Button)dialog.findViewById(R.id.btn_dialog_update_cancel);
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(android.R.layout.select_dialog_item, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage(R.string.dialog_update_estate);
 
-        btnUpdateOK.setOnClickListener(new View.OnClickListener() {
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+
+        alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
                 estate.setName(etName.getText().toString());
                 estate.setDescription(etDescription.getText().toString());
                 estate.setAddress(etAddress.getText().toString());
@@ -167,21 +187,12 @@ public class DetailActivity extends AppCompatActivity {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
                 dialog.dismiss();
             }
         });
 
-        btnUpdateCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
+        alert.show();
     }
-
     private void showToastMessage(String message) {
         boolean toast = sharedPreferences.getBoolean(NOTIFICATION_TOAST,false);
 
